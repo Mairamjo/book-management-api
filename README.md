@@ -38,8 +38,9 @@ Example:
 
 ```json
 {
-  "title": "Atomic Habits",
-  "author": "James Clear"
+  "title": "Half of a Yellow Sun",
+  "author": "Chimamanda Ngozi Adichie",
+  "publishedYear: 2003
 }
 ```
 
@@ -51,7 +52,7 @@ Example:
 
 ```json
 {
-  "title": "Atomic Habits Updated"
+  "title": "Half of a Yellow Sun Updated"
 }
 ```
 
