@@ -8,15 +8,35 @@ let books = [
     id: 1,
     title: "Purple Hibiscus",
     author: "Chimamanda Ngozi Adichie",
+    publishedYear: 2003,
   },
 ];
 
 let nextId = 2;
 
+// GET all books or search by title
 app.get("/books", (req, res) => {
-  res.json(books);
+  const { title } = req.query;
+
+  if (title) {
+    const filteredBooks = books.filter((book) =>
+      book.title.toLowerCase().includes(title.toLowerCase())
+    );
+
+    return res.status(200).json(filteredBooks);
+  }
+
+  res.status(200).json(books);
 });
 
+// BONUS: Count books
+app.get("/books/count", (req, res) => {
+  res.status(200).json({
+    count: books.length,
+  });
+});
+
+// GET one book by ID
 app.get("/books/:id", (req, res) => {
   const book = books.find(
     (b) => b.id === Number(req.params.id)
@@ -28,11 +48,12 @@ app.get("/books/:id", (req, res) => {
     });
   }
 
-  res.json(book);
+  res.status(200).json(book);
 });
 
+// CREATE a book
 app.post("/books", (req, res) => {
-  const { title, author } = req.body;
+  const { title, author, publishedYear } = req.body;
 
   if (!title || !author) {
     return res.status(400).json({
@@ -44,6 +65,7 @@ app.post("/books", (req, res) => {
     id: nextId++,
     title,
     author,
+    publishedYear,
   };
 
   books.push(newBook);
@@ -51,6 +73,7 @@ app.post("/books", (req, res) => {
   res.status(201).json(newBook);
 });
 
+// UPDATE a book
 app.put("/books/:id", (req, res) => {
   const book = books.find(
     (b) => b.id === Number(req.params.id)
@@ -62,14 +85,16 @@ app.put("/books/:id", (req, res) => {
     });
   }
 
-  const { title, author } = req.body;
+  const { title, author, publishedYear } = req.body;
 
   if (title) book.title = title;
   if (author) book.author = author;
+  if (publishedYear) book.publishedYear = publishedYear;
 
-  res.json(book);
+  res.status(200).json(book);
 });
 
+// DELETE a book
 app.delete("/books/:id", (req, res) => {
   const index = books.findIndex(
     (b) => b.id === Number(req.params.id)
@@ -83,11 +108,13 @@ app.delete("/books/:id", (req, res) => {
 
   books.splice(index, 1);
 
-  res.json({
+  res.status(200).json({
     message: "Book deleted successfully",
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

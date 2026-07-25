@@ -1,6 +1,12 @@
 # Book Management REST API
 
-A simple REST API built with Node.js and Express that performs CRUD operations on books using in-memory storage.
+A simple REST API built with Node.js and Express for managing books using in-memory storage (no database).
+
+## Language and Framework
+
+- JavaScript
+- Node.js
+- Express.js
 
 ## Installation
 
@@ -8,53 +14,127 @@ A simple REST API built with Node.js and Express that performs CRUD operations o
 npm install
 ```
 
-## Run the API
+## Run the Application
 
 ```bash
 node server.js
 ```
 
-Server runs on:
+Server runs at:
 
 ```text
 http://localhost:3000
 ```
 
+## Book Structure
+
+```json
+{
+  "id": 1,
+  "title": "Purple Hibiscus",
+  "author": "Chimamanda Ngozi Adichie",
+  "publishedYear": 2003
+}
+```
+
 ## Endpoints
 
-### Get all books
+### Get All Books
 
+```http
 GET /books
+```
 
-### Get one book
+### Get One Book
 
+```http
 GET /books/:id
+```
 
-### Create a book
+### Create a Book
 
+```http
 POST /books
+```
 
-Example:
+Sample Request:
 
 ```json
 {
-  "title": "Atomic Habits",
-  "author": "James Clear"
+  "title": "Half of a Yellow Sun",
+  "author": "Chimamanda Ngozi Adichie",
+  "publishedYear": 2006
 }
 ```
 
-### Update a book
+Sample Response:
 
+```json
+{
+  "id": 2,
+  "title": "Half of a Yellow Sun",
+  "author": "Chimamanda Ngozi Adichie",
+  "publishedYear": 2006
+}
+```
+
+### Update a Book
+
+```http
 PUT /books/:id
+```
 
-Example:
+Sample Request:
 
 ```json
 {
-  "title": "Atomic Habits Updated"
+  "title": "Half of a Yellow Sun Updated",
+  "publishedYear": 2007
 }
 ```
 
-### Delete a book
+### Delete a Book
 
+```http
 DELETE /books/:id
+```
+
+Sample Response:
+
+```json
+{
+  "message": "Book deleted successfully"
+}
+```
+
+## Bonus Endpoints
+
+### Count Books
+
+```http
+GET /books/count
+```
+
+Sample Response:
+
+```json
+{
+  "count": 2
+}
+```
+
+### Search Books by Title
+
+```http
+GET /books?title=yellow
+```
+
+## Features
+
+- In-memory data storage
+- CRUD operations
+- Search books by title
+- Count books
+- Proper HTTP status codes
+- Error handling
+- JSON responses
